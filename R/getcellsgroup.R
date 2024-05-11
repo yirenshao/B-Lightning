@@ -25,7 +25,7 @@ getcellsgroup <-function(so,
     z2 = (z - mean(z))/sd(z)
 
   }
-  if (score != "GSVA"){
+  if (score == "CFS"){
 
     z = getscore(score,index_gene_up, index_gene_down,subcounts)
 

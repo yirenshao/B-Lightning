@@ -23,15 +23,16 @@
 
 B_Lightning <- function(so,upregulated.markers,
                         downregulated.markers,
-                        score = "CFS1",
+                        score = "CFS",
                         estimated.nonfeatured.proportion = 0.9,
                         connectivity.cutoff = 4,
                         num.variablefeatures = 2000,
-                        alpha.genes = 0.05
+                        alpha.genes = 0.05,
+                        max.iter = 10000
 ){
 
   iter = 0
-  
+
   flag = T
   memo = list(upregulated.markers,downregulated.markers,upregulated.markers,downregulated.markers)
   so <- AddMetaData(so, rep("unknown",dim(so)[2]),col.name = "group")
@@ -40,19 +41,19 @@ B_Lightning <- function(so,upregulated.markers,
 
 
   while(flag){
-    start_time = Sys.time()
+
     iter  = iter + 1
     print("iter = ")
     print(iter)
     so = getcellsgroup(so,unique(c(memo[[3]],upregulated.markers)),
                           unique(c(memo[[4]],downregulated.markers)),
                        score, estimated.nonfeatured.proportion)
-    print("getcellsgroup done, now findgenes.")
+    print("Done grouping cells, now find marker genes.")
 
     temp = findgenes(so,alpha.genes)
 
     #Check Connectivity!
-    print("findgenes done, now check quantile connectivity.")
+    print("Done finding marker genes, now check quantile connectivity.")
     candidate1 = quantile_conn(c(upregulated.markers,downregulated.markers),temp[[1]],so,connectivity.cutoff,num.variablefeatures)
     candidate2 = quantile_conn(c(upregulated.markers,downregulated.markers),temp[[2]],so,connectivity.cutoff,num.variablefeatures)
     if( length(setdiff(sort(candidate1),sort(unique(c(memo[[1]],memo[[3]]))))) == 0 && length(setdiff(sort(candidate2),sort(unique(c(memo[[2]],memo[[4]]))))) == 0){
@@ -67,8 +68,8 @@ B_Lightning <- function(so,upregulated.markers,
       memo[[3]] = candidate1
       memo[[4]] = candidate2
     }
-    end_time = Sys.time()
-    if (as.numeric(end_time - start_time) > 60 * 60 * 4){
+
+    if (iter > max.iter & flag == T){
       flag = F
     }
 
