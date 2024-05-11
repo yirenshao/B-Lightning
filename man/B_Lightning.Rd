@@ -8,11 +8,12 @@ B_Lightning(
   so,
   upregulated.markers,
   downregulated.markers,
-  score = "CFS1",
+  score = "CFS",
   estimated.nonfeatured.proportion = 0.9,
   connectivity.cutoff = 4,
   num.variablefeatures = 2000,
-  alpha.genes = 0.05
+  alpha.genes = 0.05,
+  max.iter = 10000
 )
 }
 \arguments{
