@@ -17,7 +17,7 @@
 
 quantile_conn = function(index_marker_known,index_marker_candidate,so,cutoff,num.variablefeatures){
   ret = vector()
-  VF = VariableFeatures(so)
+  VF = Seurat::VariableFeatures(so)
   countdat = so@assays$RNA@counts
   if(length(index_marker_candidate) == 0){
     return(ret)

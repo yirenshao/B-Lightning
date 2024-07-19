@@ -16,7 +16,7 @@ findgenes = function(so,alpha = 0.05){
 
   Idents(so) <- so@meta.data$group
 
-  ret <- FindMarkers(so,ident.1 = "featured", ident.2 = "non-featured",test.use = "MAST",min.pct = 0.01)
+  ret <- Seurat::FindMarkers(so,ident.1 = "featured", ident.2 = "non-featured",test.use = "MAST",min.pct = 0.01)
 
   index_gene_up = ret %>% filter(p_val_adj < alpha) %>%
     filter(avg_log2FC > 0) %>% rownames()

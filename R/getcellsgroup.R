@@ -19,7 +19,7 @@ getcellsgroup <-function(so,
 
   if (score == "GSVA"){
 
-    GSVAscore <- gsva(subcounts, list(index_gene_up,index_gene_down), verbose = FALSE)
+    GSVAscore <- GSVA::gsva(subcounts, list(index_gene_up,index_gene_down), verbose = FALSE)
     #GSVAscore1.before = GSVAscore1.before[1,] - GSVAscore1.before[2,]
     z <- GSVAscore[1,] - GSVAscore[2,]
     z2 = (z - mean(z))/sd(z)

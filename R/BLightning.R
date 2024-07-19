@@ -35,9 +35,9 @@ B_Lightning <- function(so,upregulated.markers,
 
   flag = T
   memo = list(upregulated.markers,downregulated.markers,upregulated.markers,downregulated.markers)
-  so <- AddMetaData(so, rep("unknown",dim(so)[2]),col.name = "group")
-  so <- FindVariableFeatures(so, selection.method = "vst", nfeatures = num.variablefeatures)
-  topfeatures <-  head(VariableFeatures(so), num.variablefeatures)
+  so <- Seurat::AddMetaData(so, rep("unknown",dim(so)[2]),col.name = "group")
+  so <- Seurat::FindVariableFeatures(so, selection.method = "vst", nfeatures = num.variablefeatures)
+  topfeatures <-  head(Seurat::VariableFeatures(so), num.variablefeatures)
 
 
   while(flag){
