@@ -1,6 +1,7 @@
+<img src="https://github.com/yirenshao/B-Lightning/blob/master/blightning.jpg?raw=true" width="200">
+  
 # R package B-Lightning repository
   
-<img src="https://github.com/yirenshao/B-Lightning/blob/master/blightning.jpg?raw=true" width="300">
   
 This repository contains the codes for the R package "B-Lightning", a novel and robust method designed to identify
 heterogeneity-source-specific marker genes and the corresponding cell subpopulations that
@@ -17,7 +18,7 @@ for connectivity with known markers in a gene co-expression network to exclude f
 The inputs are just a Seurat object and verified "bait" genes (split into 2 vectors: up-regulated or down-regulated). If all "bait" genes are up-regulated (or down-regulated), then leave another vector as empty vector.
   
 
-## To install the package:
+## Easy Installation:
   
 ```R
 if (!require("devtools", quietly = TRUE))
