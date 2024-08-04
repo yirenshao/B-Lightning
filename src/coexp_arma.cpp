@@ -1,6 +1,5 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
-
 //' cal_coexp
 //' This function calculates the coexpression patterns between genes
 //' and returns the coexpression matrix.

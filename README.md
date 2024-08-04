@@ -25,3 +25,20 @@ if (!require("devtools", quietly = TRUE))
     install.packages("devtools")
 devtools::install_github("yirenshao/B-Lightning")
 ```
+
+## Easy Usage:
+
+```R
+so = readRDS('toy_s1_so.rds')
+upregulated.markers = c("gene 202", "gene 203" ,"gene 204", "gene 205", "gene 206", "gene 207", "gene 210")
+downregulated.markers = c("gene 201" ,"gene 208", "gene 209")
+ret = runBLightning(so,upregulated.markers,
+                                      downregulated.markers,
+                                      score = "CFS",
+                                      estimated.nonfeatured.proportion = 0.92,
+                                      connectivity.cutoff = 4,
+                                      num.variablefeatures = 2000,
+                                      alpha.genes = 0.05,
+                                      max.iter = 10)
+                                      
+```
