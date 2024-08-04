@@ -14,7 +14,7 @@
 #' @return List of mean and std
 #' @export
 EstNull_cpp <- function(x, gamma = 0.1) {
-    .Call('_BLightning_EstNull_cpp', PACKAGE = 'BLightning', x, gamma)
+    .Call(`_BLightning_EstNull_cpp`, x, gamma)
 }
 
 #' cal_coexp
@@ -25,6 +25,6 @@ EstNull_cpp <- function(x, gamma = 0.1) {
 #' @return Coexpression matrix
 #' @export
 coexp_arma <- function(X) {
-    .Call('_BLightning_coexp_arma', PACKAGE = 'BLightning', X)
+    .Call(`_BLightning_coexp_arma`, X)
 }
 

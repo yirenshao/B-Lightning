@@ -19,7 +19,8 @@
 
 getcellsgroup <-function(so,
                           index_gene_up,index_gene_down,
-                          score,estimated.nonfeatured.proportion){
+                          score,estimated.nonfeatured.proportion,
+                         nulldistestimate = FALSE){
   subcounts = so@assays$RNA@counts[c(index_gene_up,index_gene_down),]
 
   if (score == "GSVA"){
@@ -30,11 +31,19 @@ getcellsgroup <-function(so,
     z2 = (z - mean(z))/sd(z)
 
   }
-  if (score == "CFS"){
+  if (score == "CFS" & (! nulldistestimate)){
 
     z = getscore(score,index_gene_up, index_gene_down,subcounts)
 
     z2 = (z - mean(z))/sd(z)
+
+  }
+
+  if (score == "CFS" &  nulldistestimate){
+
+    z = getscore(score,index_gene_up, index_gene_down,subcounts)
+    em = EstNull_cpp(z)
+    z2 = (z - em$mean)/(em$std)
 
   }
 
