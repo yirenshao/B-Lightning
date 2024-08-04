@@ -1,0 +1,101 @@
+#' @title runBLightning
+#'
+#' @description An iterative fishing method for gene markers
+#'
+#' @param so Preprocessed Seurat Object
+#' @param upregulated.markers a char vector of established up-regulated gene markers (as the rownames of seurat object)
+#' @param downregulated.markers a char vector of established down-regulated gene markers (as the rownames of seurat object)
+#' @param score the type of cellular score used to group cells: CFS/GSVA
+#' @param estimated.nonfeatured.proportion estimated proportion of nonfeatured cells
+#' in the whole cell population, default is 0.9
+#' @param connectivity.cutoff number of established genes that candidates have to be correlated with, default is the smallest integer that is greater than or equal to the number of input genes
+#' @param num.variablefeatures number of highly variable genes used to calculate the null distribution of connectivity, default is 2000
+#' @param alpha.genes TypeI error of identifying differentally expressed genes, default is 0.05
+#' @param max.iter Maximum iterations to run, default is 10000.
+#'
+#' @return A list that contains the number of iterations, new upregulated gene markers,
+#' new downregulated gene markers,input upregulated gene markers, input downregulated gene markers,  pvalues of new upregulated gene markers,
+#' pvaluds of new downregualted markers
+#'
+#' @details This function is the main function of B-Lightning
+#'
+#' @export
+#'
+#' @import Seurat
+
+
+
+runBLightning <- function(so,upregulated.markers,
+                        downregulated.markers,
+                        score = "CFS",
+                        estimated.nonfeatured.proportion = 0.9,
+                        connectivity.cutoff = ceiling(0.3 * (length(upregulated.markers) + length(downregulated.markers))),
+                        num.variablefeatures = 2000,
+                        alpha.genes = 0.05,
+                        max.iter = 10000
+){
+
+  iter = 0
+
+  flag = T
+  memo = list(upregulated.markers,downregulated.markers,upregulated.markers,downregulated.markers)
+  so <- Seurat::AddMetaData(so, rep("unknown",dim(so)[2]),col.name = "group")
+  so <- Seurat::FindVariableFeatures(so, selection.method = "vst", nfeatures = num.variablefeatures)
+  topfeatures <-  head(Seurat::VariableFeatures(so), num.variablefeatures)
+
+
+  while(flag){
+
+    iter  = iter + 1
+    print("iter = ")
+    print(iter)
+    so = getcellsgroup(so,unique(c(memo[[3]],upregulated.markers)),
+                       unique(c(memo[[4]],downregulated.markers)),
+                       score, estimated.nonfeatured.proportion)
+    print("Done grouping cells, now find marker genes.")
+
+    temp = findgenes(so,alpha.genes)
+
+    #Check Connectivity!
+    print("Done finding marker genes, now check quantile connectivity.")
+    candidate1 = quantile_conn(c(upregulated.markers,downregulated.markers),temp[[1]],so,connectivity.cutoff,num.variablefeatures)
+    candidate2 = quantile_conn(c(upregulated.markers,downregulated.markers),temp[[2]],so,connectivity.cutoff,num.variablefeatures)
+    if( length(setdiff(sort(candidate1),sort(unique(c(memo[[1]],memo[[3]]))))) == 0 && length(setdiff(sort(candidate2),sort(unique(c(memo[[2]],memo[[4]]))))) == 0){
+      flag = F
+      memo[[1]] = memo[[3]]
+      memo[[2]] = memo[[4]]
+      memo[[3]] = candidate1
+      memo[[4]] = candidate2
+    }else{
+      memo[[1]] = memo[[3]]
+      memo[[2]] = memo[[4]]
+      memo[[3]] = candidate1
+      memo[[4]] = candidate2
+    }
+
+    if (iter > max.iter & flag == T){
+      flag = F
+    }
+
+  }
+
+  so = getcellsgroup(so,unique(c(memo[[3]],upregulated.markers)),
+                     unique(c(memo[[4]],downregulated.markers)),
+                     score, estimated.nonfeatured.proportion)
+
+  temp = findgenes(so,alpha.genes)
+
+  pvalue_up = temp[[3]][c(memo[[4]],memo[[3]]),] %>% filter(avg_log2FC > 0 ) %>% filter(p_val_adj < alpha.genes) %>% dplyr::select(p_val_adj)
+  pvalue_down = temp[[3]][c(memo[[4]],memo[[3]]),]%>% filter(avg_log2FC < 0 ) %>% filter(p_val_adj < alpha.genes) %>% dplyr::select(p_val_adj)
+
+  candidate1 = intersect(rownames(pvalue_up),memo[[3]])
+  candidate2 = intersect(rownames(pvalue_down),memo[[4]])
+
+  return(list("iterations" = iter,
+              "new upregulated markers" = candidate1,
+              "new downregulated markers" = candidate2,
+              "input upregulated markers" = upregulated.markers,
+              "input downregulated markers" = downregulated.markers,
+              "pvalues of new upregulated markers" = pvalue_up,
+              "pvalues of new downregulated markers" = pvalue_down))
+}

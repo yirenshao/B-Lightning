@@ -1,12 +1,15 @@
-
-#' Find gene markers
+#' @title findgenes
+#' @description Find gene markers
 #'
-#' This function identifies differentially expressed genes in the two groups of cells.
+#' @details This function identifies differentially expressed genes in the two groups of cells.
 #' @param so Seurat Object
-#' @param alpha typeI error
+#' @param alpha typeI error, default is 0.05
 #' @return a list consists of identified upregulated gene markers, identified
 #' down regulated gene markers and their adjusted pvalues
 #' @export
+#' @import Seurat
+#' @import dplyr
+
 
 
 findgenes = function(so,alpha = 0.05){

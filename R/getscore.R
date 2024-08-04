@@ -1,6 +1,7 @@
-#' Calculate scores of cells
+#' @title getscore
+#' @description Calculate scores of cells
 #'
-#' This function calculates scores of each cell based on gene markers' expression levels.
+#' @details This function calculates scores of each cell based on gene markers' expression levels.
 #'
 #' @param index_gene_up names of upregulated markers
 #' @param index_gene_down names of downregulated markers

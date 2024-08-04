@@ -2,19 +2,22 @@
 % Please edit documentation in R/findgenes.R
 \name{findgenes}
 \alias{findgenes}
-\title{Find gene markers}
+\title{findgenes}
 \usage{
 findgenes(so, alpha = 0.05)
 }
 \arguments{
 \item{so}{Seurat Object}
 
-\item{alpha}{typeI error}
+\item{alpha}{typeI error, default is 0.05}
 }
 \value{
 a list consists of identified upregulated gene markers, identified
 down regulated gene markers and their adjusted pvalues
 }
 \description{
+Find gene markers
+}
+\details{
 This function identifies differentially expressed genes in the two groups of cells.
 }

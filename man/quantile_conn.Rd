@@ -2,7 +2,7 @@
 % Please edit documentation in R/quantile_conn.R
 \name{quantile_conn}
 \alias{quantile_conn}
-\title{Filter out candidates with low connectivity}
+\title{quantile_conn}
 \usage{
 quantile_conn(
   index_marker_known,
@@ -13,19 +13,22 @@ quantile_conn(
 )
 }
 \arguments{
-\item{index_marker_known}{input/known gene markers}
+\item{index_marker_known}{a char vector of input/known gene markers (up-regulated and down-regulated)}
 
-\item{index_marker_candidate}{candidate gene markers to be tested for their
-connectivity with input/known gene markers}
+\item{index_marker_candidate}{a char vector of candidate gene markers to be tested for their
+connectivity with input/known gene markers (up-regulated and down-regulated)}
 
 \item{so}{Seurat Object}
 
-\item{cutoff}{threshold of connectivity}
+\item{cutoff}{number of established genes that candidates have to be correlated with}
 }
 \value{
 a char vector of genes with high connectivity
 }
 \description{
+Filter out candidates with low connectivity
+}
+\details{
 This function calculates each candidate's connectivity with known gene markers
 and only keep the ones with high connectivity based on set threshold.
 }

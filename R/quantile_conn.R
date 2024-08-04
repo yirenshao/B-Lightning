@@ -1,15 +1,19 @@
+#' @title quantile_conn
+#' @description
 #' Filter out candidates with low connectivity
-#'
+#' @details
 #'This function calculates each candidate's connectivity with known gene markers
 #'and only keep the ones with high connectivity based on set threshold.
 #'
-#' @param index_marker_known input/known gene markers
-#' @param index_marker_candidate candidate gene markers to be tested for their
-#' connectivity with input/known gene markers
+#' @param index_marker_known a char vector of input/known gene markers (up-regulated and down-regulated)
+#' @param index_marker_candidate a char vector of candidate gene markers to be tested for their
+#' connectivity with input/known gene markers (up-regulated and down-regulated)
 #' @param so Seurat Object
-#' @param cutoff threshold of connectivity
+#' @param cutoff number of established genes that candidates have to be correlated with
 #' @return a char vector of genes with high connectivity
 #' @export
+#' @import Seurat
+#'
 
 quantile_conn = function(index_marker_known,index_marker_candidate,so,cutoff,num.variablefeatures){
   ret = vector()

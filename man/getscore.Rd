@@ -2,7 +2,7 @@
 % Please edit documentation in R/getscore.R
 \name{getscore}
 \alias{getscore}
-\title{Calculate scores of cells}
+\title{getscore}
 \usage{
 getscore(score = "CFS", index_gene_up, index_gene_down, subcounts)
 }
@@ -15,5 +15,8 @@ getscore(score = "CFS", index_gene_up, index_gene_down, subcounts)
 #' @return score vector}
 }
 \description{
+Calculate scores of cells
+}
+\details{
 This function calculates scores of each cell based on gene markers' expression levels.
 }
