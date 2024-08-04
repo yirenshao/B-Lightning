@@ -16,8 +16,6 @@
 #' new downregulated gene markers, pvalues of new upregulated gene markers,
 #' pvaluds of new downregualted markers
 #'
-#' @importFrom Seurat "FindMarkers", Seurat "AddMetaData", Seurat "FindVariableFeatures",
-#' @importFrom GSVA "gsva"
 #'
 #'
 

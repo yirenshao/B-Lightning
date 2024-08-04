@@ -4,7 +4,7 @@
 \alias{getscore}
 \title{Calculate scores of cells}
 \usage{
-getscore(score = "CFS1", index_gene_up, index_gene_down, subcounts)
+getscore(score = "CFS", index_gene_up, index_gene_down, subcounts)
 }
 \arguments{
 \item{index_gene_up}{names of upregulated markers}

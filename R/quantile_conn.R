@@ -11,11 +11,6 @@
 #' @return a char vector of genes with high connectivity
 #' @export
 
-
-
-
-library(Rcpp)
-library(reticulate)
 quantile_conn = function(index_marker_known,index_marker_candidate,so,cutoff,num.variablefeatures){
   ret = vector()
   VF = Seurat::VariableFeatures(so)
@@ -33,7 +28,7 @@ quantile_conn = function(index_marker_known,index_marker_candidate,so,cutoff,num
       Y <- t(Y) #countdat should be gene by cell
       Y1 <- t(Y1)
       Y_c <- quantile_thres(Y) #A matrix,binary,whether the observation is above the 50% quantile of the non-zero part.
-      sourceCpp("coexp_arma.cpp")
+      #sourceCpp("coexp_arma.cpp")
       coex <- coexp_arma(Y_c)
       diag(coex) <- 0
       #coex_vec <- coex[upper.tri(coex, diag = F)]

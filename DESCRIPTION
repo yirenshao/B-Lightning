@@ -19,3 +19,5 @@ Imports: Seurat,
         RcppArmadillo,
         MAST,
         GSVA
+LinkingTo:Rcpp,
+        RcppArmadillo

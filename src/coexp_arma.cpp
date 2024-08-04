@@ -1,7 +1,15 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
+//' cal_coexp
+//' This function calculates the coexpression patterns between genes
+//' and returns the coexpression matrix.
+//' @author Qi Gao
+//' @param X Input binarized cell (row) by gene (column) matrix
+//' @return Coexpression matrix
+//' @export
 // [[Rcpp::export]]
+
 arma::mat coexp_arma(arma::mat X){
   int p = X.n_cols;
   int n = X.n_rows;
@@ -12,6 +20,6 @@ arma::mat coexp_arma(arma::mat X){
   arma::vec mq = 1 - q;
   arma::mat c = X.t() * X - q * q.t() * n;
   arma::mat d = sqrt(n * q * q.t() % (mq * mq.t()));
-  
+
   return(c / d);
 }

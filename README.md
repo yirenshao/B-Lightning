@@ -1,9 +1,9 @@
 <img src="https://github.com/yirenshao/B-Lightning/blob/master/blightning.jpg?raw=true" width="200">
   
-# R package B-Lightning repository
+# R package BLightning repository
   
   
-This repository contains the codes for the R package "B-Lightning", a novel and robust method designed to identify
+This repository contains the codes for the R package "BLightning", a novel and robust method designed to identify
 heterogeneity-source-specific marker genes and the corresponding cell subpopulations that
 are differentiated by a particular source of heterogeneity (e.g., cell activation state), isolating
 it from other sources of heterogeneity (e.g., cell type, cell cycle phase).
