@@ -9,6 +9,8 @@ B-Lightning (R package "BLightning") is a novel and robust method designed to id
 heterogeneity-source-specific marker genes and the corresponding cell subpopulations that
 are differentiated by a particular source of heterogeneity (e.g., cell activation state), isolating
 it from other sources of heterogeneity (e.g., cell type, cell cycle phase).
+
+doi: 10.1093/bib/bbaf033
    
 <img src="https://github.com/yirenshao/B-Lightning/blob/master/blightning_workflow.jpeg?raw=true">
 
